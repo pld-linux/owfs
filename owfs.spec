@@ -1,5 +1,6 @@
 #
 # Note that library has diffrent licence!
+# XXX: where is this library???
 #
 # Conditional build:
 %bcond_without libusb		# build without USB support
@@ -7,7 +8,7 @@
 #%define extra_ver	a
 
 Summary:	One-wire file system using FUSE
-Summary(pl):	system plików 1-Wire wykorzystuj±cy FUSE
+Summary(pl):	System plików 1-Wire wykorzystuj±cy FUSE
 Name:		owfs
 Version:	2.1p0RC
 Release:	0.1
@@ -15,21 +16,25 @@ License:	GPL v2+
 Group:		Applications
 Source0:	http://dl.sourceforge.net/owfs/%{name}-%{version}.tar.gz
 # Source0-md5:	a4a42dc1ce2b2d248642251417159429
-URL:		http://oww.sourceforge.net/
+URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	swig-php
 BuildRequires:	libtool
 %{?with_libusb:BuildRequires:	libusb-devel >= 0.1.5}
+BuildRequires:	swig-php
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Oww is a Linux interface to the Dallas Semiconductor / AAGElectronica
-1-Wire weather station kits.
+owfs is a method under Linux to allow 1-wire devices to appear like
+files in a directory. You can then enter a command like "cat
+*/temperature" to have all the temperatures sensors measure and print
+their data.
 
 %description -l pl
-Oww jest linuksowym interfejsem do stacji pogody Dallas Semiconductor
-/ AAGElectronica pracuj±cych na szynie 1-Wire.
+owfs to metoda umo¿liwiaj±ca pod Linuksem dostêp do urz±dzeñ 1-wire
+jak do plików w katalogu. Mo¿na wpisaæ polecenie w stylu "cat
+*/temperature" i spowodowaæ pomiar temperatury przez wszystkie
+czujniki oraz wypisanie danych.
 
 %package lib
 Summary:	Shared gcc library
@@ -41,7 +46,7 @@ Group:		Libraries
 Shared library.
 
 %description lib -l pl
-Biblioteka
+Biblioteka wspó³dzielona.
 
 %prep
 %setup -q
@@ -52,11 +57,11 @@ Biblioteka
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure		\
-		--enable-owphp		\
-		--enable-owfs		\
-		--enable-usb		\
-		--enable-parport	\
+%configure \
+	--enable-owfs \
+	--enable-owphp \
+	--enable-parport \
+	--enable-usb
 
 %{__make}
 
