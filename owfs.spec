@@ -13,7 +13,7 @@
 #
 #
 # Conditional build:
-%bcond_without libusb		# build without USB support
+%bcond_without	libusb		# build without USB support
 #
 
 Summary:	One-wire file system using FUSE
