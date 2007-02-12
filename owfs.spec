@@ -17,7 +17,7 @@
 #
 
 Summary:	One-wire file system using FUSE
-Summary(pl):	System plików 1-Wire wykorzystuj±cy FUSE
+Summary(pl.UTF-8):   System plikÃ³w 1-Wire wykorzystujÄ…cy FUSE
 Name:		owfs
 #Version:	2.1p0RC
 #Snapshot works, release doesn't...
@@ -43,23 +43,23 @@ files in a directory. You can then enter a command like "cat
 - */temperature" to have all the temperatures sensors measure and
   print their data.
 
-%description -l pl
-owfs to metoda umo¿liwiaj±ca pod Linuksem dostêp do urz±dzeñ 1-wire
-jak do plików w katalogu. Mo¿na wpisaæ polecenie w stylu "cat
-- */temperature" i spowodowaæ pomiar temperatury przez wszystkie
+%description -l pl.UTF-8
+owfs to metoda umoÅ¼liwiajÄ…ca pod Linuksem dostÄ™p do urzÄ…dzeÅ„ 1-wire
+jak do plikÃ³w w katalogu. MoÅ¼na wpisaÄ‡ polecenie w stylu "cat
+- */temperature" i spowodowaÄ‡ pomiar temperatury przez wszystkie
   czujniki oraz wypisanie danych.
 
 %package lib
 Summary:	Shared gcc library
-Summary(pl):	Biblioteka gcc
+Summary(pl.UTF-8):   Biblioteka gcc
 License:	LGPL
 Group:		Libraries
 
 %description lib
 Shared library.
 
-%description lib -l pl
-Biblioteka wspó³dzielona.
+%description lib -l pl.UTF-8
+Biblioteka wspÃ³Å‚dzielona.
 
 %prep
 %setup -q -n %{name}
