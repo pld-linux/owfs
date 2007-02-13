@@ -17,7 +17,7 @@
 #
 
 Summary:	One-wire file system using FUSE
-Summary(pl.UTF-8):   System plików 1-Wire wykorzystujący FUSE
+Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
 #Version:	2.1p0RC
 #Snapshot works, release doesn't...
@@ -51,7 +51,7 @@ jak do plików w katalogu. Można wpisać polecenie w stylu "cat
 
 %package lib
 Summary:	Shared gcc library
-Summary(pl.UTF-8):   Biblioteka gcc
+Summary(pl.UTF-8):	Biblioteka gcc
 License:	LGPL
 Group:		Libraries
 
