@@ -1,5 +1,4 @@
 #
-#
 # Conditional build:
 %bcond_without	libusb		# build without USB support
 %bcond_without	owphp		# build without PHP support
@@ -8,7 +7,6 @@
 %bcond_without	owftpd		# build without owftpd support
 %bcond_without	ownfsd		# build without ownfs support
 #
-
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
@@ -25,7 +23,7 @@ BuildRequires:	automake
 BuildRequires:	libtool
 %{?with_libusb:BuildRequires:	libusb-devel >= 0.1.5}
 %{?with_owphp:BuildRequires:	swig-php }
-Requires:       %{name}-libs = %{version}-%{release}
+Requires:       %{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -41,8 +39,8 @@ jak do plików w katalogu. Można wpisać polecenie w stylu "cat
   czujniki oraz wypisanie danych.
 
 %package libs
-Summary:	Shared gcc library
-Summary(pl.UTF-8):	Biblioteka gcc
+Summary:	Shared owfs library
+Summary(pl.UTF-8):	Biblioteka owfs
 License:	LGPL
 Group:		Libraries
 Obsoletes:	owfs-lib
@@ -58,7 +56,7 @@ Summary:	Header files for owfs library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki owfs
 License:	LGPL
 Group:		Development/Libraries
-Requires:       %{name}-libs = %{version}-%{release}
+Requires:       %{name}-libs = %{epoch}:%{version}-%{release}
 
 %description devel
 Header files for owfs library.
@@ -70,7 +68,7 @@ Pliki nagłówkowe biblioteki owfs.
 Summary:        Static owfs library
 Summary(pl):    Statyczna biblioteka owfs
 Group:          Development/Libraries
-Requires:       %{name}-devel = %{version}-%{release}
+Requires:       %{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Static owfs library.
@@ -79,7 +77,7 @@ Static owfs library.
 Statyczna biblioteka owfs.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 
 %build
 %{__libtoolize}
@@ -128,7 +126,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man1/*
-%{_mandir}/man3/*
 %{_mandir}/man5/*
 %{_mandir}/mann/*
 
@@ -136,12 +133,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/lib*.a
-
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_includedir}/*
+%{_mandir}/man3/*
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/lib*.a
