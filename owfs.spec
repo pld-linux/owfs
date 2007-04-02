@@ -10,13 +10,13 @@
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
-Version:	2.6p3
+Version:	2.6p4
 Release:	0.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications
 Source0:	http://dl.sourceforge.net/owfs/%{name}-%{version}.tar.gz
-# Source0-md5:	4fb8c5ef77b3b6cfff8d3659b29ddd83
+# Source0-md5:	c556283cf0b2fbeb6f57381fb7bdae40
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
