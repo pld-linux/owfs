@@ -14,6 +14,7 @@ Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
 Version:	2.6p3
 Release:	0.1
+Epoch:		2
 License:	GPL v2+
 Group:		Applications
 Source0:	http://dl.sourceforge.net/owfs/%{name}-%{version}.tar.gz
@@ -44,6 +45,7 @@ Summary:	Shared gcc library
 Summary(pl.UTF-8):	Biblioteka gcc
 License:	LGPL
 Group:		Libraries
+Obsoletes:	owfs-lib
 
 %description libs
 Owfs library.
@@ -125,10 +127,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/*
-%dir %{_mandir}/man1/*
-%dir %{_mandir}/man3/*
-%dir %{_mandir}/man5/*
-%dir %{_mandir}/mann/*
+%{_mandir}/man1/*
+%{_mandir}/man3/*
+%{_mandir}/man5/*
+%{_mandir}/mann/*
 
 %files libs
 %defattr(644,root,root,755)
