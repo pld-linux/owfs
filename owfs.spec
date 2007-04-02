@@ -23,20 +23,20 @@ BuildRequires:	automake
 BuildRequires:	libtool
 %{?with_libusb:BuildRequires:	libusb-devel >= 0.1.5}
 %{?with_owphp:BuildRequires:	swig-php }
-Requires:       %{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 owfs is a method under Linux to allow 1-wire devices to appear like
 files in a directory. You can then enter a command like "cat
 - */temperature" to have all the temperatures sensors measure and
-  print their data.
+print their data.
 
 %description -l pl.UTF-8
 owfs to metoda umożliwiająca pod Linuksem dostęp do urządzeń 1-wire
 jak do plików w katalogu. Można wpisać polecenie w stylu "cat
 - */temperature" i spowodować pomiar temperatury przez wszystkie
-  czujniki oraz wypisanie danych.
+czujniki oraz wypisanie danych.
 
 %package libs
 Summary:	Shared owfs library
@@ -56,7 +56,7 @@ Summary:	Header files for owfs library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki owfs
 License:	LGPL
 Group:		Development/Libraries
-Requires:       %{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description devel
 Header files for owfs library.
@@ -65,15 +65,15 @@ Header files for owfs library.
 Pliki nagłówkowe biblioteki owfs.
 
 %package static
-Summary:        Static owfs library
-Summary(pl):    Statyczna biblioteka owfs
-Group:          Development/Libraries
-Requires:       %{name}-devel = %{epoch}:%{version}-%{release}
+Summary:	Static owfs library
+Summary(pl.UTF-8):	Statyczna biblioteka owfs
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Static owfs library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka owfs.
 
 %prep
