@@ -1,40 +1,30 @@
 #
-# Note that library has diffrent licence!
-# XXX: where is this library???
-# module/owlib -- afer building.
-#
-# ToDo:
-#    --enable-parport
-#    fails on:
-#    ow_ds1410.c: In function `CLAIM':
-#    ow_ds1410.c:74: error: `devfd' undeclared (first use in this function)
-#    ow_ds1410.c:74: error: (Each undeclared identifier is reported only once
-#    ow_ds1410.c:74: error: for each function it appears in.)
-#
 #
 # Conditional build:
 %bcond_without	libusb		# build without USB support
+%bcond_without	owphp		# build without PHP support
+%bcond_without	owfs		# build without owfs support
+%bcond_without	tcl		# build without tcl support
+%bcond_without	owftpd		# build without owftpd support
+%bcond_without	ownfsd		# build without ownfs support
 #
 
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
-#Version:	2.1p0RC
-#Snapshot works, release doesn't...
-Version:	20050629
+Version:	2.6p3
 Release:	0.1
-Epoch:		1
 License:	GPL v2+
 Group:		Applications
-###Source0:	http://dl.sourceforge.net/owfs/%{name}-%{version}.tar.gz
-Source0:	http://duch.mimuw.edu.pl/~hunter/%{name}-%{version}.tar.gz
-# Source0-md5:	7722b7ca7b3fa00bcee3321b06a6ae09
+Source0:	http://dl.sourceforge.net/owfs/%{name}-%{version}.tar.gz
+# Source0-md5:	4fb8c5ef77b3b6cfff8d3659b29ddd83
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 %{?with_libusb:BuildRequires:	libusb-devel >= 0.1.5}
-BuildRequires:	swig-php
+%{?with_owphp:BuildRequires:	swig-php }
+Requires:       %{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -49,20 +39,45 @@ jak do plików w katalogu. Można wpisać polecenie w stylu "cat
 - */temperature" i spowodować pomiar temperatury przez wszystkie
   czujniki oraz wypisanie danych.
 
-%package lib
+%package libs
 Summary:	Shared gcc library
 Summary(pl.UTF-8):	Biblioteka gcc
 License:	LGPL
 Group:		Libraries
 
-%description lib
-Shared library.
+%description libs
+Owfs library.
 
-%description lib -l pl.UTF-8
-Biblioteka współdzielona.
+%description libs -l pl.UTF-8
+Biblioteka owfs.
+
+%package devel
+Summary:	Header files for owfs library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki owfs
+License:	LGPL
+Group:		Development/Libraries
+Requires:       %{name}-libs = %{version}-%{release}
+
+%description devel
+Header files for owfs library.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki owfs.
+
+%package static
+Summary:        Static owfs library
+Summary(pl):    Statyczna biblioteka owfs
+Group:          Development/Libraries
+Requires:       %{name}-devel = %{version}-%{release}
+
+%description static
+Static owfs library.
+
+%description static -l pl
+Statyczna biblioteka owfs.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}-%{version}
 
 %build
 %{__libtoolize}
@@ -71,14 +86,25 @@ Biblioteka współdzielona.
 %{__autoheader}
 %{__automake}
 %configure \
+%if %{with owfs}
 	--enable-owfs		\
-	--enable-owphp		\
-	--enable-tcl		\
-	--enable-usb		\
-	--enable-owftpd     \
-	--enable-ownfsd     \
-
-#	--enable-parport	\
+%endif
+%if %{without owphp}
+	--disable-owphp		\
+%endif
+%if %{without tcl}
+	--disable-tcl		\
+%endif
+%if %{without libusb}
+	--disable-usb		\
+%endif
+%if %{without owftpd}
+	--disable-owftpd 	\
+%endif
+%if %{without ownfsd}
+	--disable-ownfsd 	\
+%endif
+	--enable-parport	
 
 %{__make}
 
@@ -88,13 +114,32 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%find_lang %{name}
+install -d $RPM_BUILD_ROOT%{_datadir}/man
+cp -fa $RPM_BUILD_ROOT/usr/man $RPM_BUILD_ROOT%{_datadir}
+rm -fr $RPM_BUILD_ROOT/usr/man
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f %{name}.lang
+%files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/*
-%{_datadir}/oww
+%dir %{_mandir}/man1/*
+%dir %{_mandir}/man3/*
+%dir %{_mandir}/man5/*
+%dir %{_mandir}/mann/*
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/lib*.a
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/lib*.la
+%{_includedir}/*
