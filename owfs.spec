@@ -21,6 +21,7 @@ URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
+BuildRequires:	libfuse-devel
 %{?with_libusb:BuildRequires:	libusb-devel >= 0.1.5}
 %{?with_owphp:BuildRequires:	swig-php }
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -128,6 +129,7 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%attr(755,root,root) %{_libdir}/lib*.so.*
 
 %files devel
 %defattr(644,root,root,755)
