@@ -1,17 +1,21 @@
+# TODO:
+# - bconds and packages review
+# - install files in proper place
+# - files
+# - with owphp doesn't build
 #
 # Conditional build:
 %bcond_without	libusb		# build without USB support
-%bcond_without	owphp		# build without PHP support
+%bcond_with	owphp		# build without PHP support
 %bcond_without	owfs		# build without owfs support
 %bcond_without	tcl		# build without tcl support
 %bcond_without	owftpd		# build without owftpd support
-%bcond_without	ownfsd		# build without ownfs support
 #
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
 Version:	2.7p2
-Release:	0.1
+Release:	0.2
 Epoch:		2
 License:	GPL v2+
 Group:		Applications
@@ -23,7 +27,16 @@ BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	libfuse-devel
 %{?with_libusb:BuildRequires:	libusb-devel >= 0.1.5}
-%{?with_owphp:BuildRequires:	swig-php }
+BuildRequires:	perl(ExtUtils::MakeMaker)
+BuildRequires:	perl-devel
+%{?with_owphp:BuildRequires:	php-devel}
+%{?with_owphp:BuildRequires:	php-program}
+BuildRequires:	python-devel
+BuildRequires:	rpm-pythonprov
+BuildRequires:	swig-perl
+%{?with_owphp:BuildRequires:	swig-php}
+BuildRequires:	swig-python
+%{?with_tcl:BuildRequires:	tcl-devel}
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -87,25 +100,12 @@ Statyczna biblioteka owfs.
 %{__autoheader}
 %{__automake}
 %configure \
-%if %{with owfs}
-	--enable-owfs		\
-%endif
-%if %{without owphp}
-	--disable-owphp		\
-%endif
-%if %{without tcl}
-	--disable-tcl		\
-%endif
-%if %{without libusb}
-	--disable-usb		\
-%endif
-%if %{without owftpd}
-	--disable-owftpd 	\
-%endif
-%if %{without ownfsd}
-	--disable-ownfsd 	\
-%endif
-	--enable-parport	
+	--%{?with_owfs:en}%{!?with_owfs:dis}able-owfs \
+	--%{?with_owphp:en}%{!?with_owphp:dis}able-owphp \
+	--%{?with_tcl:en}%{!?with_tcl:dis}able-tcl \
+	--%{?with_libusb:en}%{!?with_libusb:dis}able-usb \
+	--%{?with_owftpd:en}%{!?with_owftpd:dis}able-owftpd \
+	--enable-parport
 
 %{__make}
 
@@ -118,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
@@ -129,7 +132,7 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
-%attr(755,root,root) %{_libdir}/lib*.so.*
+%attr(755,root,root) %ghost %{_libdir}/lib*.so.2
 
 %files devel
 %defattr(644,root,root,755)
