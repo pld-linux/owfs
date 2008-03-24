@@ -10,6 +10,8 @@
 %bcond_without	owfs		# build without owfs support
 %bcond_without	tcl		# build without tcl support
 %bcond_without	owftpd		# build without owftpd support
+%bcond_without	perl		# build without perl support
+%bcond_without	python		# build without python support
 #
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
@@ -32,13 +34,13 @@ BuildRequires:	perl-ExtUtils-MakeMaker
 BuildRequires:	perl-devel
 %{?with_owphp:BuildRequires:	php-devel}
 %{?with_owphp:BuildRequires:	php-program}
-BuildRequires:	python-devel >= 1:2.5
-BuildRequires:	rpm-pythonprov
+%{?with_python:BuildRequires:	python-devel >= 1:2.5}
+%{?with_python:BuildRequires:	rpm-pythonprov}
 BuildRequires:	rpmbuild(macros) >= 1.219
 BuildRequires:	sed >= 4.0
-BuildRequires:	swig-perl
+%{?with_perl:BuildRequires:	swig-perl}
 %{?with_owphp:BuildRequires:	swig-php}
-BuildRequires:	swig-python
+%{?with_python:BuildRequires:	swig-python}
 %{?with_tcl:BuildRequires:	tcl-devel}
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -149,6 +151,8 @@ sed -i -e 's/) Makefile.PL/& INSTALLDIRS=vendor/' \
 	--%{?with_tcl:en}%{!?with_tcl:dis}able-tcl \
 	--%{?with_libusb:en}%{!?with_libusb:dis}able-usb \
 	--%{?with_owftpd:en}%{!?with_owftpd:dis}able-owftpd \
+	--%{?with_perl:en}%{!?with_perl:dis}able-owperl \
+	--%{?with_python:en}%{!?with_python:dis}able-owpython \
 	--enable-parport
 
 %{__make} \
@@ -161,10 +165,10 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	TCL_BIN_DIR=%{_libdir}
 
-%py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/ow
-%py_postclean
+%{?with_python: %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/ow}
+%{?with_python:%py_postclean}
 
-rm $RPM_BUILD_ROOT%{_libdir}/owtcl-0.2/*.{la,a}
+%{?with_tcl:rm $RPM_BUILD_ROOT%{_libdir}/owtcl-0.2/*.{la,a}}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -176,8 +180,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/owdir
-%attr(755,root,root) %{_bindir}/owfs
-%attr(755,root,root) %{_bindir}/owftpd
+%{?with_owfs:%attr(755,root,root) %{_bindir}/owfs}
+%{?with_owftpd:%attr(755,root,root) %{_bindir}/owftpd}
 %attr(755,root,root) %{_bindir}/owhttpd
 %attr(755,root,root) %{_bindir}/owmon
 %attr(755,root,root) %{_bindir}/owpresent
@@ -231,6 +235,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libowcapi.a
 %{_libdir}/libownet.a
 
+%if %{with perl}
 %files -n perl-owfs
 %defattr(644,root,root,755)
 %{perl_vendorarch}/OW.pm
@@ -240,7 +245,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorlib}/OWNet.pm
 %{_mandir}/man3/OWNet.3*
 %{_mandir}/man3/owperl.3*
+%endif
 
+%if %{with python}
 %files -n python-owfs
 %defattr(644,root,root,755)
 %dir %{py_sitedir}/ow
@@ -250,7 +257,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py_sitescriptdir}/ownet
 %{py_sitescriptdir}/ownet/*.py[co]
 %{py_sitescriptdir}/ownet-*.egg-info
+%endif
 
+%if %{with tcl}
 %files -n tcl-owfs
 %defattr(644,root,root,755)
 %dir %{_libdir}/owtcl-0.2
@@ -259,3 +268,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/owtcl-0.2/*.tcl
 %{_mandir}/man3/owtcl.3*
 %{_mandir}/mann/owtcl.n*
+%endif
