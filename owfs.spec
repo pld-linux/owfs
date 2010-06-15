@@ -179,6 +179,7 @@ rm -rf $RPM_BUILD_ROOT
 %{?with_python: %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/ow}
 %{?with_python:%py_postclean}
 
+%{?with_owphp:rm $RPM_BUILD_ROOT%{_libdir}/php/*.la}
 %{?with_owtcl:rm $RPM_BUILD_ROOT%{_libdir}/owtcl-1.0/*.la}
 
 %clean
