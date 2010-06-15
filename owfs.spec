@@ -8,7 +8,7 @@
 %bcond_without	libusb		# build without USB support
 %bcond_with	owphp		# build with PHP support
 %bcond_without	owfs		# build without owfs support
-%bcond_without	tcl		# build without tcl support
+%bcond_without	owtcl		# build without owtcl support
 %bcond_without	owftpd		# build without owftpd support
 %bcond_without	perl		# build without perl support
 %bcond_without	python		# build without python support
@@ -148,7 +148,7 @@ Wiązania Tcl-a do owfs.
 %configure \
 	--%{?with_owfs:en}%{!?with_owfs:dis}able-owfs \
 	--%{?with_owphp:en}%{!?with_owphp:dis}able-owphp \
-	--%{?with_tcl:en}%{!?with_tcl:dis}able-tcl \
+	--%{?with_libusb:en}%{!?with_libusb:dis}able-owtcl \
 	--%{?with_libusb:en}%{!?with_libusb:dis}able-usb \
 	--%{?with_owftpd:en}%{!?with_owftpd:dis}able-owftpd \
 	--%{?with_perl:en}%{!?with_perl:dis}able-owperl \
