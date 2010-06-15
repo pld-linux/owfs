@@ -2,7 +2,6 @@
 # - bconds and packages review
 # - install files in proper place
 # - files
-# - with owphp doesn't build
 #
 # Conditional build:
 %bcond_without	libusb		# build without USB support
