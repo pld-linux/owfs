@@ -2,6 +2,7 @@
 # - bconds and packages review
 # - install files in proper place
 # - files
+# - try to re-enable static libraries
 #
 # Conditional build:
 %bcond_without	libusb		# build without USB support
