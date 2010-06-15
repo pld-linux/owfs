@@ -119,6 +119,18 @@ Python bindings for owfs.
 %description -n python-owfs -l pl.UTF-8
 Wiązania Pythona do owfs.
 
+%package -n php-owfs
+Summary:	PHP bindings for owfs
+Summary(pl.UTF-8):	Wiązania PHP do owfs
+Group:		Development/Languages/PHP
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+
+%description -n php-owfs
+PHP bindings for owfs.
+
+%description -n php-owfs -l pl.UTF-8
+Wiązania PHP do owfs.
+
 %package -n tcl-owfs
 Summary:	Tcl bindings for owfs
 Summary(pl.UTF-8):	Wiązania Tcl-a do owfs
@@ -257,6 +269,13 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py_sitedir}/ownet
 %{py_sitedir}/ownet/*.py[co]
 %{py_sitedir}/ownet-*.egg-info
+%endif
+
+%if %{with owphp}
+%files -n php-owfs
+%defattr(644,root,root,755)
+%dir %{_libdir}/php
+%attr(755,root,root) %{_libdir}/php/libowphp.so
 %endif
 
 %if %{with owtcl}
