@@ -26,6 +26,7 @@ Source0:	http://downloads.sourceforge.net/owfs/%{name}-%{version}.tar.gz
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
+BuildRequires:	ed
 BuildRequires:	libfuse-devel >= 2.2
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
@@ -168,7 +169,7 @@ rm -rf $RPM_BUILD_ROOT
 %{?with_python: %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/ow}
 %{?with_python:%py_postclean}
 
-#%%{?with_tcl:rm $RPM_BUILD_ROOT%{_libdir}/owtcl-0.2/*.{la,a}}
+%{?with_tcl:rm $RPM_BUILD_ROOT%{_libdir}/owtcl-1.0/*.la}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -263,10 +264,10 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with tcl}
 %files -n tcl-owfs
 %defattr(644,root,root,755)
-#%%dir %{_libdir}/owtcl-0.2
-#%%attr(755,root,root) %{_libdir}/owtcl-0.2/ow-0.2.so
-#%%attr(755,root,root) %{_libdir}/owtcl-0.2/ow.so
-#%%{_libdir}/owtcl-0.2/*.tcl
+%dir %{_libdir}/owtcl-1.0
+%attr(755,root,root) %{_libdir}/owtcl-1.0/ow-1.0.so
+%attr(755,root,root) %{_libdir}/owtcl-1.0/ow.so
+%{_libdir}/owtcl-1.0/*.tcl
 %{_mandir}/man3/owtcl.3*
 %{_mandir}/mann/owtcl.n*
 %endif
