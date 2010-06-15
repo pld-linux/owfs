@@ -148,7 +148,7 @@ Wiązania Tcl-a do owfs.
 %configure \
 	--%{?with_owfs:en}%{!?with_owfs:dis}able-owfs \
 	--%{?with_owphp:en}%{!?with_owphp:dis}able-owphp \
-	--%{?with_libusb:en}%{!?with_libusb:dis}able-owtcl \
+	--%{?with_owtcl:en}%{!?with_owtcl:dis}able-owtcl \
 	--%{?with_libusb:en}%{!?with_libusb:dis}able-usb \
 	--%{?with_owftpd:en}%{!?with_owftpd:dis}able-owftpd \
 	--%{?with_perl:en}%{!?with_perl:dis}able-owperl \
