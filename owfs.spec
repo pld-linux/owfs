@@ -16,19 +16,19 @@
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
-Version:	2.7p4
+Version:	2.7p38
 Release:	0.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/System
-Source0:	http://dl.sourceforge.net/owfs/%{name}-%{version}.tar.gz
-# Source0-md5:	7b7fe955c6686348f4119dde63944d95
+Source0:	http://downloads.sourceforge.net/owfs/%{name}-%{version}.tar.gz
+# Source0-md5:	c287d96c629b5deb6c85e6a82eecdc8a
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
-BuildRequires:	libtool
 BuildRequires:	libfuse-devel >= 2.2
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtool
 %{?with_libusb:BuildRequires:	libusb-devel >= 0.1.5}
 BuildRequires:	perl-ExtUtils-MakeMaker
 BuildRequires:	perl-devel
@@ -168,7 +168,7 @@ rm -rf $RPM_BUILD_ROOT
 %{?with_python: %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/ow}
 %{?with_python:%py_postclean}
 
-%{?with_tcl:rm $RPM_BUILD_ROOT%{_libdir}/owtcl-0.2/*.{la,a}}
+#%%{?with_tcl:rm $RPM_BUILD_ROOT%{_libdir}/owtcl-0.2/*.{la,a}}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -180,6 +180,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/owdir
+%attr(755,root,root) %{_bindir}/owget
 %{?with_owfs:%attr(755,root,root) %{_bindir}/owfs}
 %{?with_owftpd:%attr(755,root,root) %{_bindir}/owftpd}
 %attr(755,root,root) %{_bindir}/owhttpd
@@ -207,11 +208,11 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libow-2.7.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libow-2.7.so.4
+%attr(755,root,root) %ghost %{_libdir}/libow-2.7.so.38
 %attr(755,root,root) %{_libdir}/libowcapi-2.7.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.7.so.4
+%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.7.so.38
 %attr(755,root,root) %{_libdir}/libownet-2.7.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libownet-2.7.so.4
+%attr(755,root,root) %ghost %{_libdir}/libownet-2.7.so.38
 
 %files devel
 %defattr(644,root,root,755)
@@ -231,9 +232,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libow.a
-%{_libdir}/libowcapi.a
-%{_libdir}/libownet.a
+#%%{_libdir}/libow.a
+#%%{_libdir}/libowcapi.a
+#%%{_libdir}/libownet.a
 
 %if %{with perl}
 %files -n perl-owfs
@@ -254,18 +255,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{py_sitedir}/ow/_OW.so
 %{py_sitedir}/ow/__init__.py[co]
 %{py_sitedir}/ow-*.egg-info
-%dir %{py_sitescriptdir}/ownet
-%{py_sitescriptdir}/ownet/*.py[co]
-%{py_sitescriptdir}/ownet-*.egg-info
+%dir %{py_sitedir}/ownet
+%{py_sitedir}/ownet/*.py[co]
+%{py_sitedir}/ownet-*.egg-info
 %endif
 
 %if %{with tcl}
 %files -n tcl-owfs
 %defattr(644,root,root,755)
-%dir %{_libdir}/owtcl-0.2
-%attr(755,root,root) %{_libdir}/owtcl-0.2/ow-0.2.so
-%attr(755,root,root) %{_libdir}/owtcl-0.2/ow.so
-%{_libdir}/owtcl-0.2/*.tcl
+#%%dir %{_libdir}/owtcl-0.2
+#%%attr(755,root,root) %{_libdir}/owtcl-0.2/ow-0.2.so
+#%%attr(755,root,root) %{_libdir}/owtcl-0.2/ow.so
+#%%{_libdir}/owtcl-0.2/*.tcl
 %{_mandir}/man3/owtcl.3*
 %{_mandir}/mann/owtcl.n*
 %endif
