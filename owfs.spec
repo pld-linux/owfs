@@ -26,7 +26,6 @@ Source0:	http://downloads.sourceforge.net/owfs/%{name}-%{version}.tar.gz
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
-BuildRequires:	ed
 BuildRequires:	libfuse-devel >= 2.2
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
