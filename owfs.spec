@@ -6,7 +6,7 @@
 #
 # Conditional build:
 %bcond_without	libusb		# build without USB support
-%bcond_with	owphp		# build with PHP support
+%bcond_without	owphp		# build with PHP support
 %bcond_without	owfs		# build without owfs support
 %bcond_without	owtcl		# build without owtcl support
 %bcond_without	owftpd		# build without owftpd support
