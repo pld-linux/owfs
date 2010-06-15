@@ -276,6 +276,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with owphp}
 %files -n php-owfs
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/ownet.php
 %dir %{_libdir}/php
 %attr(755,root,root) %{_libdir}/php/libowphp.so
 %endif
