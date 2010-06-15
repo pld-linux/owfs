@@ -33,7 +33,7 @@ BuildRequires:	perl-ExtUtils-MakeMaker
 BuildRequires:	perl-devel
 %{?with_owphp:BuildRequires:	php-devel}
 %{?with_owphp:BuildRequires:	php-program}
-%{?with_python:BuildRequires:	python-devel >= 1:2.5}
+%{?with_python:BuildRequires:	python-devel}
 %{?with_python:BuildRequires:	rpm-pythonprov}
 %{?with_python:BuildRequires:	rpmbuild(macros) >= 1.219}
 BuildRequires:	sed >= 4.0
@@ -265,10 +265,12 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py_sitedir}/ow
 %attr(755,root,root) %{py_sitedir}/ow/_OW.so
 %{py_sitedir}/ow/__init__.py[co]
-%{py_sitedir}/ow-*.egg-info
 %dir %{py_sitedir}/ownet
 %{py_sitedir}/ownet/*.py[co]
+%if "%{py_ver}" > "2.4"
+%{py_sitedir}/ow-*.egg-info
 %{py_sitedir}/ownet-*.egg-info
+%endif
 %endif
 
 %if %{with owphp}
