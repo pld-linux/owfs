@@ -36,7 +36,7 @@ BuildRequires:	perl-devel
 %{?with_owphp:BuildRequires:	php-program}
 %{?with_python:BuildRequires:	python-devel >= 1:2.5}
 %{?with_python:BuildRequires:	rpm-pythonprov}
-BuildRequires:	rpmbuild(macros) >= 1.219
+%{?with_python:BuildRequires:	rpmbuild(macros) >= 1.219}
 BuildRequires:	sed >= 4.0
 %{?with_perl:BuildRequires:	swig-perl}
 %{?with_owphp:BuildRequires:	swig-php}
@@ -135,7 +135,7 @@ Wiązania Tcl-a do owfs.
 %prep
 %setup -q
 
-sed -i -e 's/) Makefile.PL/& INSTALLDIRS=vendor/' \
+%{__sed} -i -e 's/) Makefile.PL/& INSTALLDIRS=vendor/' \
 	module/swig/perl5/Makefile.am \
 	module/ownet/perl5/Makefile.am
 
