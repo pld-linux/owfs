@@ -168,7 +168,7 @@ rm -rf $RPM_BUILD_ROOT
 %{?with_python: %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/ow}
 %{?with_python:%py_postclean}
 
-%{?with_tcl:rm $RPM_BUILD_ROOT%{_libdir}/owtcl-1.0/*.la}
+%{?with_owtcl:rm $RPM_BUILD_ROOT%{_libdir}/owtcl-1.0/*.la}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -260,7 +260,7 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/ownet-*.egg-info
 %endif
 
-%if %{with tcl}
+%if %{with owtcl}
 %files -n tcl-owfs
 %defattr(644,root,root,755)
 %dir %{_libdir}/owtcl-1.0
