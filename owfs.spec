@@ -52,13 +52,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 owfs is a method under Linux to allow 1-wire devices to appear like
 files in a directory. You can then enter a command like "cat
 - */temperature" to have all the temperatures sensors measure and
-  print their data.
+print their data.
 
 %description -l pl.UTF-8
 owfs to metoda umożliwiająca pod Linuksem dostęp do urządzeń 1-wire
 jak do plików w katalogu. Można wpisać polecenie w stylu "cat
 - */temperature" i spowodować pomiar temperatury przez wszystkie
-  czujniki oraz wypisanie danych.
+czujniki oraz wypisanie danych.
 
 %package libs
 Summary:	Shared owfs library
@@ -169,17 +169,21 @@ Wiązania Tcl-a do owfs.
 	--%{?with_owftpd:en}%{!?with_owftpd:dis}able-owftpd \
 	--%{?with_perl:en}%{!?with_perl:dis}able-owperl \
 	--%{?with_python:en}%{!?with_python:dis}able-owpython \
-	--enable-parport
+	--enable-parport \
+	--sysconfdir="%{_sysconfdir}"
 
 %{__make} \
 	TCL_BIN_DIR=%{_libdir}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_sysconfdir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	TCL_BIN_DIR=%{_libdir}
+
+install src/rpm/owfs.conf $RPM_BUILD_ROOT%{_sysconfdir}
 
 %if %{with python}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/ow
@@ -226,6 +230,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/owserver
 %attr(755,root,root) %{_bindir}/owtap
 %attr(755,root,root) %{_bindir}/owwrite
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/owfs.conf
 %{_mandir}/man1/owdir.1*
 %{_mandir}/man1/owfs.1*
 %{_mandir}/man1/owftpd.1*
