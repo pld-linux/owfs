@@ -170,7 +170,7 @@ Wiązania Tcl-a do owfs.
 	--%{?with_perl:en}%{!?with_perl:dis}able-owperl \
 	--%{?with_python:en}%{!?with_python:dis}able-owpython \
 	--enable-parport \
-	--sysconfdir="%{_sysconfdir}"
+	--sysconfdir=%{_sysconfdir}
 
 %{__make} \
 	TCL_BIN_DIR=%{_libdir}
@@ -183,7 +183,7 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}
 	DESTDIR=$RPM_BUILD_ROOT \
 	TCL_BIN_DIR=%{_libdir}
 
-install src/rpm/owfs.conf $RPM_BUILD_ROOT%{_sysconfdir}
+cp -a src/rpm/owfs.conf $RPM_BUILD_ROOT%{_sysconfdir}
 
 %if %{with python}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/ow
