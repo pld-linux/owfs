@@ -1,8 +1,11 @@
 # TODO:
 # - bconds and packages review
 # - install files in proper place
-# - files
+# - bunch of unpackaged files
 # - try to re-enable static libraries
+# - add -avoid-version to php ext build and remove moving in install section
+# - install ownet.php to php_data_dir instead of mv in install
+# - add --optimize=2 to python build, and remove manualy %py_ocomp in install
 #
 # Conditional build:
 %bcond_without	libusb		# build without USB support
@@ -12,7 +15,7 @@
 %bcond_without	owftpd		# build without owftpd support
 %bcond_without	perl		# build without perl support
 %bcond_without	python		# build without python support
-#
+
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
@@ -32,11 +35,11 @@ BuildRequires:	libtool
 %{?with_libusb:BuildRequires:	libusb-devel >= 0.1.5}
 BuildRequires:	perl-ExtUtils-MakeMaker
 BuildRequires:	perl-devel
-%{?with_owphp:BuildRequires:	php-devel}
+%{?with_owphp:BuildRequires:	php-devel >= 4:5.0.4}
 %{?with_owphp:BuildRequires:	php-program}
 %{?with_python:BuildRequires:	python-devel}
 %{?with_python:BuildRequires:	rpm-pythonprov}
-%{?with_python:BuildRequires:	rpmbuild(macros) >= 1.219}
+BuildRequires:	rpmbuild(macros) >= 1.519
 BuildRequires:	sed >= 4.0
 %{?with_perl:BuildRequires:	swig-perl}
 %{?with_owphp:BuildRequires:	swig-php}
@@ -49,13 +52,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 owfs is a method under Linux to allow 1-wire devices to appear like
 files in a directory. You can then enter a command like "cat
 - */temperature" to have all the temperatures sensors measure and
-print their data.
+  print their data.
 
 %description -l pl.UTF-8
 owfs to metoda umożliwiająca pod Linuksem dostęp do urządzeń 1-wire
 jak do plików w katalogu. Można wpisać polecenie w stylu "cat
 - */temperature" i spowodować pomiar temperatury przez wszystkie
-czujniki oraz wypisanie danych.
+  czujniki oraz wypisanie danych.
 
 %package libs
 Summary:	Shared owfs library
@@ -125,6 +128,7 @@ Summary:	PHP bindings for owfs
 Summary(pl.UTF-8):	Wiązania PHP do owfs
 Group:		Development/Languages/PHP
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+%{?requires_php_extension}
 
 %description -n php-owfs
 PHP bindings for owfs.
@@ -177,11 +181,30 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	TCL_BIN_DIR=%{_libdir}
 
-%{?with_python: %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/ow}
-%{?with_python:%py_postclean}
+%if %{with python}
+%py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/ow
+%py_postclean
+%endif
 
-%{?with_owphp:rm $RPM_BUILD_ROOT%{_libdir}/php/*.la}
-%{?with_owtcl:rm $RPM_BUILD_ROOT%{_libdir}/owtcl-1.0/*.la}
+%if %{with owphp}
+rm -f $RPM_BUILD_ROOT%{_libdir}/php/*.la
+mv -f $RPM_BUILD_ROOT%{_libdir}/php/libowphp.so{.*.*.*,}
+rm -f $RPM_BUILD_ROOT%{_libdir}/php/libowphp.so.*
+
+install -d $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
+cat <<'EOF' > $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d/owfs.ini
+; Enable owfs extension module
+extension=libowphp.so
+EOF
+
+# a class, relocate
+install -d $RPM_BUILD_ROOT%{php_data_dir}
+mv $RPM_BUILD_ROOT{%{_bindir},%{php_data_dir}}/ownet.php
+%endif
+
+%if %{with owtcl}
+rm -f $RPM_BUILD_ROOT%{_libdir}/owtcl-1.0/*.la
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -278,9 +301,9 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with owphp}
 %files -n php-owfs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/ownet.php
-%dir %{_libdir}/php
-%attr(755,root,root) %{_libdir}/php/libowphp.so
+%{php_data_dir}/ownet.php
+%config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/owfs.ini
+%attr(755,root,root) %{php_extensiondir}/libowphp.so
 %endif
 
 %if %{with owtcl}
