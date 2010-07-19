@@ -19,20 +19,20 @@
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
-Version:	2.7p38
+Version:	2.7p39
 Release:	0.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/owfs/%{name}-%{version}.tar.gz
-# Source0-md5:	c287d96c629b5deb6c85e6a82eecdc8a
+# Source0-md5:	94bbfc0e8f82aab6c4cd2c27c22d8d97
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
 BuildRequires:	libfuse-devel >= 2.2
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
-%{?with_libusb:BuildRequires:	libusb-devel >= 0.1.5}
+%{?with_libusb:BuildRequires:	libusb-compat-devel}
 BuildRequires:	perl-ExtUtils-MakeMaker
 BuildRequires:	perl-devel
 %{?with_owphp:BuildRequires:	php-devel >= 4:5.0.4}
@@ -249,11 +249,11 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libow-2.7.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libow-2.7.so.38
+%attr(755,root,root) %ghost %{_libdir}/libow-2.7.so.39
 %attr(755,root,root) %{_libdir}/libowcapi-2.7.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.7.so.38
+%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.7.so.39
 %attr(755,root,root) %{_libdir}/libownet-2.7.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libownet-2.7.so.38
+%attr(755,root,root) %ghost %{_libdir}/libownet-2.7.so.39
 
 %files devel
 %defattr(644,root,root,755)
