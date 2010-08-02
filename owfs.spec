@@ -6,6 +6,7 @@
 # - add -avoid-version to php ext build and remove moving in install section
 # - install ownet.php to php_data_dir instead of mv in install
 # - add --optimize=2 to python build, and remove manualy %py_ocomp in install
+# - re-enable owtcl
 #
 # Conditional build:
 %bcond_without	libusb		# build without USB support
@@ -19,13 +20,13 @@
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
-Version:	2.7p39
+Version:	2.8p0
 Release:	0.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/owfs/%{name}-%{version}.tar.gz
-# Source0-md5:	94bbfc0e8f82aab6c4cd2c27c22d8d97
+# Source0-md5:	16de38f99206024b0ac32176f4f1afcb
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
@@ -208,6 +209,7 @@ mv $RPM_BUILD_ROOT{%{_bindir},%{php_data_dir}}/ownet.php
 
 %if %{with owtcl}
 rm -f $RPM_BUILD_ROOT%{_libdir}/owtcl-1.0/*.la
+gzip src/man/owtcl.3
 %endif
 
 %clean
@@ -248,12 +250,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libow-2.7.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libow-2.7.so.39
-%attr(755,root,root) %{_libdir}/libowcapi-2.7.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.7.so.39
-%attr(755,root,root) %{_libdir}/libownet-2.7.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libownet-2.7.so.39
+%attr(755,root,root) %{_libdir}/libow-2.8.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libow-2.8.so.0
+%attr(755,root,root) %{_libdir}/libowcapi-2.8.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.8.so.0
+%attr(755,root,root) %{_libdir}/libownet-2.8.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libownet-2.8.so.0
 
 %files devel
 %defattr(644,root,root,755)
@@ -314,10 +316,10 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with owtcl}
 %files -n tcl-owfs
 %defattr(644,root,root,755)
-%dir %{_libdir}/owtcl-1.0
-%attr(755,root,root) %{_libdir}/owtcl-1.0/ow-1.0.so
-%attr(755,root,root) %{_libdir}/owtcl-1.0/ow.so
-%{_libdir}/owtcl-1.0/*.tcl
+#%%dir %{_libdir}/owtcl-1.0
+#%%attr(755,root,root) %{_libdir}/owtcl-1.0/ow-1.0.so
+#%%attr(755,root,root) %{_libdir}/owtcl-1.0/ow.so
+#%%{_libdir}/owtcl-1.0/*.tc0%{_mandir}/man3/owtcl.3*
 %{_mandir}/man3/owtcl.3*
-%{_mandir}/mann/owtcl.n*
+#%%{_mandir}/mann/owtcl.n*
 %endif
