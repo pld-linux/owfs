@@ -20,13 +20,13 @@
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
-Version:	2.8p4
+Version:	2.8p5
 Release:	0.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/owfs/%{name}-%{version}.tar.gz
-# Source0-md5:	beccd8765184b2abea0a3f28dc466ea3
+# Source0-md5:	26a4fb0ac8e1372b33cb7846726c282d
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
@@ -45,7 +45,7 @@ BuildRequires:	sed >= 4.0
 %{?with_perl:BuildRequires:	swig-perl}
 %{?with_owphp:BuildRequires:	swig-php}
 %{?with_python:BuildRequires:	swig-python}
-%{?with_tcl:BuildRequires:	tcl-devel}
+%{?with_owtcl:BuildRequires:	tcl-devel}
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -209,7 +209,6 @@ mv $RPM_BUILD_ROOT{%{_bindir},%{php_data_dir}}/ownet.php
 
 %if %{with owtcl}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/owtcl-1.0/*.la
-gzip src/man/owtcl.3
 %endif
 
 %clean
@@ -251,11 +250,11 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libow-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libow-2.8.so.4
+%attr(755,root,root) %ghost %{_libdir}/libow-2.8.so.5
 %attr(755,root,root) %{_libdir}/libowcapi-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.8.so.4
+%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.8.so.5
 %attr(755,root,root) %{_libdir}/libownet-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libownet-2.8.so.4
+%attr(755,root,root) %ghost %{_libdir}/libownet-2.8.so.5
 
 %files devel
 %defattr(644,root,root,755)
