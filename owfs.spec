@@ -20,13 +20,13 @@
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
-Version:	2.8p5
+Version:	2.8p6
 Release:	0.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/owfs/%{name}-%{version}.tar.gz
-# Source0-md5:	26a4fb0ac8e1372b33cb7846726c282d
+# Source0-md5:	ffd2cec1ceeccfd911b4f181b66829c2
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
@@ -250,11 +250,11 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libow-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libow-2.8.so.5
+%attr(755,root,root) %ghost %{_libdir}/libow-2.8.so.6
 %attr(755,root,root) %{_libdir}/libowcapi-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.8.so.5
+%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.8.so.6
 %attr(755,root,root) %{_libdir}/libownet-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libownet-2.8.so.5
+%attr(755,root,root) %ghost %{_libdir}/libownet-2.8.so.6
 
 %files devel
 %defattr(644,root,root,755)
