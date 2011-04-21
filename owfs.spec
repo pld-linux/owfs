@@ -20,13 +20,13 @@
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
-Version:	2.8p7
+Version:	2.8p8
 Release:	0.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/owfs/%{name}-%{version}.tar.gz
-# Source0-md5:	58dcd6b03de9e58cc282a63f57fcaa23
+# Source0-md5:	56afd8857bf3ae51fadd7fce0c354b58
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
@@ -204,7 +204,6 @@ EOF
 
 # a class, relocate
 install -d $RPM_BUILD_ROOT%{php_data_dir}
-mv $RPM_BUILD_ROOT{%{_bindir},%{php_data_dir}}/ownet.php
 %endif
 
 %if %{with owtcl}
@@ -245,16 +244,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/owwrite.1*
 %{_mandir}/man5/owfs.5*
 %{_mandir}/man5/owfs.conf.5*
-%{_mandir}/mann/*
+#%%{_mandir}/mann/*
 
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libow-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libow-2.8.so.7
+%attr(755,root,root) %ghost %{_libdir}/libow-2.8.so.8
 %attr(755,root,root) %{_libdir}/libowcapi-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.8.so.7
+%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.8.so.8
 %attr(755,root,root) %{_libdir}/libownet-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libownet-2.8.so.7
+%attr(755,root,root) %ghost %{_libdir}/libownet-2.8.so.8
 
 %files devel
 %defattr(644,root,root,755)
@@ -307,7 +306,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with owphp}
 %files -n php-owfs
 %defattr(644,root,root,755)
-%{php_data_dir}/ownet.php
+%{php_data_dir}/OWNet/ownet.php
 %config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/owfs.ini
 %attr(755,root,root) %{php_extensiondir}/libowphp.so
 %endif
