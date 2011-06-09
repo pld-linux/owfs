@@ -20,13 +20,13 @@
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
-Version:	2.8p8
+Version:	2.8p9
 Release:	0.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/owfs/%{name}-%{version}.tar.gz
-# Source0-md5:	56afd8857bf3ae51fadd7fce0c354b58
+# Source0-md5:	d0d13d4e4cf9cf52f5261c1c8f0ec5fe
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
@@ -249,11 +249,11 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libow-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libow-2.8.so.8
+%attr(755,root,root) %ghost %{_libdir}/libow-2.8.so.9
 %attr(755,root,root) %{_libdir}/libowcapi-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.8.so.8
+%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.8.so.9
 %attr(755,root,root) %{_libdir}/libownet-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libownet-2.8.so.8
+%attr(755,root,root) %ghost %{_libdir}/libownet-2.8.so.9
 
 %files devel
 %defattr(644,root,root,755)
@@ -318,6 +318,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/owtcl-1.0/ow-1.0.so
 %attr(755,root,root) %{_libdir}/owtcl-1.0/ow.so
 #%%{_libdir}/owtcl-1.0/*.tc0%{_mandir}/man3/owtcl.3*
-#%%{_mandir}/man3/owtcl.3*
+%{_mandir}/man3/owtcl.3*
 #%%{_mandir}/mann/owtcl.n*
 %endif
