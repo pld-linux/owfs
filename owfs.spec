@@ -306,6 +306,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with owphp}
 %files -n php-owfs
 %defattr(644,root,root,755)
+%dir %{php_data_dir}/OWNet
 %{php_data_dir}/OWNet/ownet.php
 %config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/owfs.ini
 %attr(755,root,root) %{php_extensiondir}/libowphp.so
