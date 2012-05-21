@@ -2,6 +2,7 @@
 # - bconds and packages review
 # - install files in proper place
 # - bunch of unpackaged files
+# - review man files packaging
 # - try to re-enable static libraries
 # - add -avoid-version to php ext build and remove moving in install section
 # - install ownet.php to php_data_dir instead of mv in install
@@ -20,13 +21,13 @@
 Summary:	One-wire file system using FUSE
 Summary(pl.UTF-8):	System plików 1-Wire wykorzystujący FUSE
 Name:		owfs
-Version:	2.8p9
+Version:	2.8p14
 Release:	0.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/owfs/%{name}-%{version}.tar.gz
-# Source0-md5:	d0d13d4e4cf9cf52f5261c1c8f0ec5fe
+# Source0-md5:	cd213fd9bbfed95cca2c833c0f14dd72
 URL:		http://owfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
@@ -249,11 +250,11 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libow-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libow-2.8.so.9
+%attr(755,root,root) %ghost %{_libdir}/libow-2.8.so.14
 %attr(755,root,root) %{_libdir}/libowcapi-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.8.so.9
+%attr(755,root,root) %ghost %{_libdir}/libowcapi-2.8.so.14
 %attr(755,root,root) %{_libdir}/libownet-2.8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libownet-2.8.so.9
+%attr(755,root,root) %ghost %{_libdir}/libownet-2.8.so.14
 
 %files devel
 %defattr(644,root,root,755)
@@ -294,7 +295,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %dir %{py_sitedir}/ow
 %attr(755,root,root) %{py_sitedir}/ow/_OW.so
-#%%{py_sitedir}/ow/__init__.py[co]
+%{py_sitedir}/ow/__init__.py[co]
 %dir %{py_sitedir}/ownet
 %{py_sitedir}/ownet/*.py[co]
 %if "%{py_ver}" > "2.4"
@@ -319,6 +320,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/owtcl-1.0/ow-1.0.so
 %attr(755,root,root) %{_libdir}/owtcl-1.0/ow.so
 #%%{_libdir}/owtcl-1.0/*.tc0%{_mandir}/man3/owtcl.3*
-%{_mandir}/man3/owtcl.3*
+#%{_mandir}/man3/owtcl.3*
 #%%{_mandir}/mann/owtcl.n*
 %endif
