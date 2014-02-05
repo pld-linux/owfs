@@ -1,4 +1,3 @@
-# $Revision: 1.45 $, $Date: 2011/09/28 08:03:12 $
 # TODO:
 # - bconds and packages review
 # - install files in proper place
@@ -54,13 +53,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 owfs is a method under Linux to allow 1-wire devices to appear like
 files in a directory. You can then enter a command like "cat
 - */temperature" to have all the temperatures sensors measure and
-print their data.
+  print their data.
 
 %description -l pl.UTF-8
 owfs to metoda umożliwiająca pod Linuksem dostęp do urządzeń 1-wire
 jak do plików w katalogu. Można wpisać polecenie w stylu "cat
 - */temperature" i spowodować pomiar temperatury przez wszystkie
-czujniki oraz wypisanie danych.
+  czujniki oraz wypisanie danych.
 
 %package libs
 Summary:	Shared owfs library
@@ -117,7 +116,7 @@ Summary:	Python bindings for owfs
 Summary(pl.UTF-8):	Wiązania Pythona do owfs
 Group:		Libraries/Python
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-%pyrequires_eq	python-libs
+Requires:	python-libs
 
 %description -n python-owfs
 Python bindings for owfs.
@@ -266,7 +265,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libow.la
 %{_libdir}/libowcapi.la
 %{_libdir}/libownet.la
-%{_includedir}/ow*.h	
+%{_includedir}/ow*.h
 # FIXME: should be man3, not man1
 %{_mandir}/man1/libowcapi.1*
 %{_mandir}/man1/owcapi.1*
